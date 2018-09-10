@@ -1,0 +1,42 @@
+﻿@model flip_flop.Models.TicketsHistory
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TicketsHistory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfTrade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateOfTrade)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KeyBuyerNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KeyBuyerNavigation.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KeySellerNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KeySellerNavigation.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KeyTicketNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KeyTicketNavigation.FlightNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Key">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

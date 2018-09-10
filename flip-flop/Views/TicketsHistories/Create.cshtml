@@ -1,0 +1,45 @@
+﻿@model flip_flop.Models.TicketsHistory
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<h4>TicketsHistory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="KeySeller" class="control-label"></label>
+                <select asp-for="KeySeller" class ="form-control" asp-items="ViewBag.KeySeller"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="KeyBuyer" class="control-label"></label>
+                <select asp-for="KeyBuyer" class ="form-control" asp-items="ViewBag.KeyBuyer"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="KeyTicket" class="control-label"></label>
+                <select asp-for="KeyTicket" class ="form-control" asp-items="ViewBag.KeyTicket"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfTrade" class="control-label"></label>
+                <input asp-for="DateOfTrade" class="form-control" />
+                <span asp-validation-for="DateOfTrade" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

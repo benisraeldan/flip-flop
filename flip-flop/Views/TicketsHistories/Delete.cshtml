@@ -1,0 +1,45 @@
+﻿@model flip_flop.Models.TicketsHistory
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>TicketsHistory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfTrade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateOfTrade)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KeyBuyerNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KeyBuyerNavigation.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KeySellerNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KeySellerNavigation.City)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KeyTicketNavigation)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KeyTicketNavigation.FlightNumber)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Key" />
+        <input type="submit" value="Delete" class="btn btn-default" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

@@ -1,0 +1,83 @@
+﻿@model IEnumerable<flip_flop.Models.PlainTickets>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TargetKey)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfFlight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FlightNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CancleFee)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Food)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Baggage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassKey)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TargetKey)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfFlight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FlightNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CancleFee)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Food)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Baggage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassKey)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Key">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Key">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Key">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
