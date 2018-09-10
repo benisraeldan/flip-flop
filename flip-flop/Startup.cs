@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using flip_flop.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace flip_flop
 {
@@ -30,9 +32,11 @@ namespace flip_flop
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
+            
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            string connectionstring = "Data Source=DESKTOP-SRR5P4I;Initial Catalog=FlipFlop;Trusted_Connection=True;";
+            services.AddDbContext<FlipFlopContext>(options => options.UseSqlServer(connectionstring));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,7 +60,9 @@ namespace flip_flop
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller}/{action}/{id}",
+                    defaults:new { controller ="Users", action = "Details", id = "2" });
+
             });
         }
     }
