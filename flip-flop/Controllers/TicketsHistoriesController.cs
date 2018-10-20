@@ -21,7 +21,10 @@ namespace flip_flop.Controllers
         // GET: TicketsHistories
         public async Task<IActionResult> Index()
         {
-            var flipFlopContext = _context.TicketsHistory.Include(t => t.KeyBuyerNavigation).Include(t => t.KeySellerNavigation).Include(t => t.KeyTicketNavigation);
+            var flipFlopContext = _context.TicketsHistory.Include(t => t.KeyBuyerNavigation).
+                                        Include(t => t.KeySellerNavigation).
+                                        Include(t => t.KeyTicketNavigation).
+                                        Include(t=>t.KeyTicketNavigation.TargetKeyNavigation);
             return View(await flipFlopContext.ToListAsync());
         }
 

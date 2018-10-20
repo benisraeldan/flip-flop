@@ -64,9 +64,11 @@ namespace flip_flop.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryKey"] = new SelectList(_context.Countries, "Key", "CountryName", targets.CountryKey);
+           // ViewData["CountryKey"] = new SelectList(_context.Countries, "Key", "CountryName", targets.CountryName);
             return View(targets);
         }
+
+   
 
         // GET: Targets/Edit/5
         public async Task<IActionResult> Edit(int? id)
@@ -81,7 +83,7 @@ namespace flip_flop.Controllers
             {
                 return NotFound();
             }
-            ViewData["CountryKey"] = new SelectList(_context.Countries, "Key", "CountryName", targets.CountryKey);
+           // ViewData["CountryKey"] = new SelectList(_context.Countries, "Key", "CountryName", targets.CountryName);
             return View(targets);
         }
 
@@ -117,7 +119,7 @@ namespace flip_flop.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryKey"] = new SelectList(_context.Countries, "Key", "CountryName", targets.CountryKey);
+          //  ViewData["CountryKey"] = new SelectList(_context.Countries, "Key", "CountryName", targets.CountryName);
             return View(targets);
         }
 
@@ -151,6 +153,7 @@ namespace flip_flop.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+       
         private bool TargetsExists(int id)
         {
             return _context.Targets.Any(e => e.Key == id);

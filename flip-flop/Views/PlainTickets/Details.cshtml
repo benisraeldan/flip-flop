@@ -11,10 +11,10 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.TargetKey)
+            @Html.DisplayNameFor(model => model.Target)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.TargetKey)
+            @Html.DisplayFor(model => model.Target)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.DateOfFlight)
@@ -53,10 +53,10 @@
             @Html.DisplayFor(model => model.Baggage)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.ClassKey)
+            @Html.DisplayNameFor(model => model.Class)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.ClassKey)
+            @Html.DisplayFor(model => model.Class)
         </dd>
         <dt>
             @Html.DisplayNameFor(model => model.Price)
@@ -67,6 +67,11 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Key">Edit</a> |
+    <form asp-action="BuyFlight">
+        <input type="hidden" asp-for="Key" />
+        <input type="hidden" asp-for="OwnerId" />
+        <input type="submit" value="Buy" class="btn btn-default" />
+    </form>    
+    @*<a asp-action="Edit" asp-route-id="@Model.Key">Edit</a> |*@
     <a asp-action="Index">Back to List</a>
 </div>

@@ -1,5 +1,10 @@
 ﻿@model flip_flop.Models.PlainTickets
-
+<environment names="Development">
+    <link rel="stylesheet" href="~/css/AddTargetInPlainTickets.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/AddTarget.js"></script>
+</environment>
 @{
     ViewData["Title"] = "Create";
 }
@@ -12,10 +17,13 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TargetKey" class="control-label"></label>
-                <input asp-for="TargetKey" class="form-control" />
-                <span asp-validation-for="TargetKey" class="text-danger"></span>
+            <label asp-for="Target" class="control-label"></label>
+            <select asp-for="Target" asp-items="ViewBag.ListOfTargets" class="form-control" id="selectCategroy">
+                <option value="">-- Select Destination --</option>
+            </select>
+            <button id="myBtn" onclick="Helper('block')" class="btn btn-default">Add Destination</button>
+            <div>
+                <span asp-validation-for="Target" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="DateOfFlight" class="control-label"></label>
@@ -52,9 +60,11 @@
                 </div>
             </div>
             <div class="form-group">
-                <label asp-for="ClassKey" class="control-label"></label>
-                <input asp-for="ClassKey" class="form-control" />
-                <span asp-validation-for="ClassKey" class="text-danger"></span>
+                <label asp-for="Class" class="control-label"></label>
+                <select asp-for="Class" class="form-control" asp-items="ViewBag.ListOfDepartments">
+                    <option selected="selected" value="">-- Select Departments --</option>
+                </select>
+                <span asp-validation-for="Class" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
@@ -68,9 +78,24 @@
     </div>
 </div>
 
+<!-- The Modal -->
+<div id="Modal">
+
+    <!-- Modal content -->
+    <div id="modal-content">
+        <span onclick="Helper('none')" id="close">&times;</span>
+        @{Html.RenderPartial("AddTarget");}
+    </div>
+</div>
+
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+<environment>
+<script src="~/js/AddTarget.js"></script>
+</environment>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

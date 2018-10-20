@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using flip_flop.Models;
+using flip_flop.WebService;
 
 namespace flip_flop.Controllers
 {
@@ -12,6 +13,17 @@ namespace flip_flop.Controllers
     {
         public IActionResult Index()
         {
+            WeatherData nyc = new WeatherData("New york");
+            WeatherData paris = new WeatherData("Paris");
+            WeatherData london = new WeatherData("London");
+            nyc.CheckWeather();
+            paris.CheckWeather();
+            london.CheckWeather();
+
+            ViewData["New-York"] = nyc.ToString();
+            ViewData["Paris"] = paris.ToString();
+            ViewData["London"] = london.ToString();
+
             return View();
         }
 

@@ -8,6 +8,7 @@ namespace flip_flop.Models
         public Users()
         {
             Complains = new HashSet<Complains>();
+            PlainTickets = new HashSet<PlainTickets>();
             TicketsHistoryKeyBuyerNavigation = new HashSet<TicketsHistory>();
             TicketsHistoryKeySellerNavigation = new HashSet<TicketsHistory>();
         }
@@ -22,6 +23,7 @@ namespace flip_flop.Models
         public bool IsAdmin { get; set; }
 
         public ICollection<Complains> Complains { get; set; }
+        public ICollection<PlainTickets> PlainTickets { get; set; }
         public ICollection<TicketsHistory> TicketsHistoryKeyBuyerNavigation { get; set; }
         public ICollection<TicketsHistory> TicketsHistoryKeySellerNavigation { get; set; }
     }

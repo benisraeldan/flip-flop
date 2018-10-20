@@ -37,6 +37,7 @@ namespace flip_flop
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             string connectionstring = "Data Source=DESKTOP-SRR5P4I;Initial Catalog=FlipFlop;Trusted_Connection=True;";
             services.AddDbContext<FlipFlopContext>(options => options.UseSqlServer(connectionstring));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

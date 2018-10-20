@@ -1,0 +1,13 @@
+﻿
+h2 {
+    text-shadow: 2px 2px #000000;
+}
+@font-face {
+    font-family: myFirstFont;
+    src: url(sansation_light.woff);
+}
+
+div {
+    font-family: myFirstFont;
+    column-count: 3;
+}

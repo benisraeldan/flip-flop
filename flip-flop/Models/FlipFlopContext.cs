@@ -44,7 +44,8 @@ namespace flip_flop.Models
 
                 entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Complains>(entity =>
@@ -55,13 +56,15 @@ namespace flip_flop.Models
 
                 entity.Property(e => e.Content)
                     .IsRequired()
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Date).HasColumnType("date");
 
                 entity.Property(e => e.Title)
                     .IsRequired()
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.UserKey).HasColumnName("User_key");
 
@@ -81,14 +84,16 @@ namespace flip_flop.Models
                 entity.Property(e => e.Comments)
                     .IsRequired()
                     .HasColumnName("comments")
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ComplainKey).HasColumnName("Complain_key");
 
                 entity.Property(e => e.Status)
                     .IsRequired()
                     .HasColumnName("status")
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.ComplainKeyNavigation)
                     .WithMany(p => p.ComplainsStatus)
@@ -106,7 +111,8 @@ namespace flip_flop.Models
                 entity.Property(e => e.CountryName)
                     .IsRequired()
                     .HasColumnName("Country_name")
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Department>(entity =>
@@ -117,7 +123,8 @@ namespace flip_flop.Models
 
                 entity.Property(e => e.Type)
                     .IsRequired()
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<PlainTickets>(entity =>
@@ -130,7 +137,7 @@ namespace flip_flop.Models
 
                 entity.Property(e => e.CancleFee).HasColumnName("Cancle_Fee");
 
-                entity.Property(e => e.ClassKey).HasColumnName("Class_key");
+                entity.Property(e => e.Class).HasColumnName("Class_key");
 
                 entity.Property(e => e.DateOfFlight)
                     .HasColumnName("Date_of_flight")
@@ -139,11 +146,30 @@ namespace flip_flop.Models
                 entity.Property(e => e.FlightNumber)
                     .IsRequired()
                     .HasColumnName("Flight_Number")
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.OwnerId).HasColumnName("Owner_ID");
 
-                entity.Property(e => e.TargetKey).HasColumnName("Target_key");
+                entity.Property(e => e.Target).HasColumnName("Target_key");
+
+                entity.HasOne(d => d.ClassKeyNavigation)
+                    .WithMany(p => p.PlainTickets)
+                    .HasForeignKey(d => d.Class)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Plain_Tickets_department");
+
+                entity.HasOne(d => d.Owner)
+                    .WithMany(p => p.PlainTickets)
+                    .HasForeignKey(d => d.OwnerId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Plain_Tickets_User");
+
+                entity.HasOne(d => d.TargetKeyNavigation)
+                    .WithMany(p => p.PlainTickets)
+                    .HasForeignKey(d => d.Target)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Plain_Tickets_Target");
             });
 
             modelBuilder.Entity<Targets>(entity =>
@@ -155,13 +181,14 @@ namespace flip_flop.Models
                 entity.Property(e => e.CityName)
                     .IsRequired()
                     .HasColumnName("City_Name")
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.CountryKey).HasColumnName("Country_key");
+                entity.Property(e => e.CountryName).HasColumnName("Country_key");
 
                 entity.HasOne(d => d.CountryKeyNavigation)
                     .WithMany(p => p.Targets)
-                    .HasForeignKey(d => d.CountryKey)
+                    .HasForeignKey(d => d.CountryName)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Targets_Countries");
             });
@@ -211,31 +238,36 @@ namespace flip_flop.Models
 
                 entity.Property(e => e.City)
                     .IsRequired()
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasColumnName("email")
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.FirstName)
                     .IsRequired()
                     .HasColumnName("First_name")
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.LastName)
                     .IsRequired()
                     .HasColumnName("Last_Name")
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Password)
                     .IsRequired()
-                    .HasColumnType("text");
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.PhoneNumber)
                     .IsRequired()
                     .HasColumnName("Phone_Number")
-                    .HasMaxLength(10)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
             });
         }

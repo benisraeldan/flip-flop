@@ -14,5 +14,18 @@ namespace flip_flop.Models
         public Users KeyBuyerNavigation { get; set; }
         public Users KeySellerNavigation { get; set; }
         public PlainTickets KeyTicketNavigation { get; set; }
+
+        public TicketsHistory(int buyer, int seller, int ticket)
+        {
+            this.DateOfTrade = DateTime.Today;
+            this.KeyBuyer = buyer;
+            this.KeySeller = seller;
+            this.KeyTicket = ticket;
+        }
+
+        public TicketsHistory()
+        {
+
+        }
     }
 }
