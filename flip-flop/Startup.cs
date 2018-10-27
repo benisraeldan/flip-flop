@@ -35,7 +35,7 @@ namespace flip_flop
             
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            string connectionstring = "Data Source=DESKTOP-SRR5P4I;Initial Catalog=FlipFlop;Trusted_Connection=True;";
+            string connectionstring = "Data Source=localhost\\SqlServ;Initial Catalog=FlipFlop;Trusted_Connection=True;";
             services.AddDbContext<FlipFlopContext>(options => options.UseSqlServer(connectionstring));
             
         }
