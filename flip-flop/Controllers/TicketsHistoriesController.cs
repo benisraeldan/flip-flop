@@ -28,6 +28,36 @@ namespace flip_flop.Controllers
             return View(await flipFlopContext.ToListAsync());
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Index(string Owner, string Buyer, DateTime DateOfFlight)
+        {
+            var History = from m in _context.TicketsHistory
+                               select m;
+
+            if (!String.IsNullOrEmpty(Owner))
+            {
+                History = History.Where(s => s.KeySellerNavigation.FirstName.ToLower().Contains(Owner));
+            }
+            if (!String.IsNullOrEmpty(Buyer))
+            {
+                History = History.Where(s => s.KeyBuyerNavigation.FirstName.ToLower().Contains(Buyer));
+            }
+            if (DateOfFlight.ToShortDateString() != "01/01/0001")
+            {
+                
+              History = History.Where(s => s.DateOfTrade == DateOfFlight);
+            }
+
+            History = History.Include(t => t.KeyBuyerNavigation).
+                                        Include(t => t.KeySellerNavigation).
+                                        Include(t => t.KeyTicketNavigation).
+                                        Include(t => t.KeyTicketNavigation.TargetKeyNavigation);
+            //PlainTickets = PlainTickets.Where(s => s.IsSold == false);
+
+            return View(await History.ToListAsync());
+        }
+
+
         // GET: TicketsHistories/Details/5
         public async Task<IActionResult> Details(int? id)
         {

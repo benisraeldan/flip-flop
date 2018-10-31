@@ -61,8 +61,8 @@ namespace flip_flop
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action}/{id}",
-                    defaults:new { controller ="Users", action = "Details", id = "2" });
+                    template: "{controller}/{action}",
+                    defaults:new { controller ="Home", action = "Contact" });
 
             });
         }
