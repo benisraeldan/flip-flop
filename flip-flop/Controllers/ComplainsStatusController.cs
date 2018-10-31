@@ -76,12 +76,14 @@ namespace flip_flop.Controllers
                 return NotFound();
             }
 
-            var complainsStatus = await _context.ComplainsStatus.FindAsync(id);
+            var complainsStatus =  _context.ComplainsStatus.Include(x=> x.ComplainKeyNavigation).
+                                    First(x=>x.Key == id);
             if (complainsStatus == null)
             {
                 return NotFound();
             }
-            ViewData["ComplainKey"] = new SelectList(_context.Complains, "Key", "Content", complainsStatus.ComplainKey);
+            
+            ViewData["ComplainKey"] = complainsStatus.ComplainKeyNavigation.Content;
             return View(complainsStatus);
         }
 
@@ -92,13 +94,10 @@ namespace flip_flop.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Key,ComplainKey,Status,Comments")] ComplainsStatus complainsStatus)
         {
-            if (id != complainsStatus.Key)
-            {
-                return NotFound();
-            }
-
+ 
             if (ModelState.IsValid)
             {
+               complainsStatus.ComplainKeyNavigation = _context.Complains.First(x => x.Key == complainsStatus.ComplainKey);
                 try
                 {
                     _context.Update(complainsStatus);

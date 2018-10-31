@@ -12,6 +12,16 @@
 
 <h2>Index</h2>
 
+
+<form asp-controller="TicketsHistories" asp-action="Index">
+    <p>
+        Owner: <input type="text" name="Owner" placeholder="Owner">
+        Buyer: <input type="text" name="Buyer" placeholder="Buyer">
+        DateOfFlight: <input type="date" name="DateOfFlight" placeholder="DateOfFlight">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
 <table class="table">
     <thead>
         <tr>
@@ -24,7 +34,7 @@
             <th></th>
         </tr>
     </thead>
-    <tbody  id="try" class="try">
+    <tbody id="try" class="try">
         @foreach (var item in Model)
         {
             <tr>
@@ -44,7 +54,7 @@
         }
     </tbody>
 </table>
-<div >
+<div>
 
 
 </div>

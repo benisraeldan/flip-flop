@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace flip_flop.Models
 {
@@ -12,6 +13,8 @@ namespace flip_flop.Models
 
         public int Key { get; set; }
         public int CountryName { get; set; }
+
+        [StringLength(60, MinimumLength = 3)]
         public string CityName { get; set; }
 
         public Countries CountryKeyNavigation { get; set; }

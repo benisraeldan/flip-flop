@@ -35,7 +35,7 @@ namespace flip_flop
             });
             
             
-            string connectionstring = "Data Source=LAPTOP-60F4ESR5;Initial Catalog=FlipFlop;Trusted_Connection=True;";
+            string connectionstring = "Data Source=DESKTOP-SRR5P4I;Initial Catalog=FlipFlop;Trusted_Connection=True;";
             services.AddDbContext<FlipFlopContext>(options => options.UseSqlServer(connectionstring));
 
             // added identity
@@ -68,8 +68,8 @@ namespace flip_flop
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action}/{id}",
-                    defaults:new { controller ="Users", action = "Details", id = "2" });
+                    template: "{controller}/{action}",
+                    defaults:new { controller ="Home", action = "Contact" });
                 routes.MapAreaRoute(
                     name: "Identity",
                     areaName: "Identity",
