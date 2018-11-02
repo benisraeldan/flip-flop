@@ -11,5 +11,17 @@ namespace flip_flop.Models
         public string Comments { get; set; }
 
         public Complains ComplainKeyNavigation { get; set; }
+
+        public ComplainsStatus()
+        {
+
+        }
+
+        public ComplainsStatus(int complainKey)
+        {
+            this.ComplainKey = complainKey;
+            this.Status = "Waiting";
+            this.Comments = "";
+        }
     }
 }

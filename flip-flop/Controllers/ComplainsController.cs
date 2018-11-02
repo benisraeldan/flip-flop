@@ -60,7 +60,12 @@ namespace flip_flop.Controllers
         {
             if (ModelState.IsValid)
             {
+                complains.Date = DateTime.Now;
+                complains.UserKey = 5;
                 _context.Add(complains);
+                var complainStatus = new ComplainsStatus(complains.Key);
+                _context.Add(complainStatus);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
