@@ -1,10 +1,12 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace flip_flop.Models
 {
-    public partial class FlipFlopContext : DbContext
+    public partial class FlipFlopContext : IdentityDbContext<IdentityUser>
     {
         public FlipFlopContext()
         {
@@ -36,6 +38,7 @@ namespace flip_flop.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<AirPortCompany>(entity =>
             {
                 entity.HasKey(e => e.Key);

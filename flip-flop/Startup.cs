@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace flip_flop
 {
@@ -36,8 +37,15 @@ namespace flip_flop
             
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             string connectionstring = "Data Source=localhost\\SqlServ;Initial Catalog=FlipFlop;Trusted_Connection=True;";
+
             services.AddDbContext<FlipFlopContext>(options => options.UseSqlServer(connectionstring));
-            
+
+            // added identity
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<FlipFlopContext>();
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,13 +64,18 @@ namespace flip_flop
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action}",
-                    defaults:new { controller ="Home", action = "Contact" });
+                    template: "{controller}/{action}/{id}",
+                    defaults: new { controller = "Users", action = "Details", id = "2" });
+                routes.MapAreaRoute(
+                    name: "Identity",
+                    areaName: "Identity",
+                    template: "{page}");
 
             });
         }
