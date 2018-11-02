@@ -10,6 +10,9 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using System.Net.Http.Headers;
+using libsvm;
+using SVMTextClassifier;
+using System.Diagnostics;
 
 namespace flip_flop.Controllers
 {
@@ -109,7 +112,7 @@ namespace flip_flop.Controllers
                 ViewBag.ListOfTargets = new SelectList(targetsList.AsNoTracking(), "Key", "CityName");
             }
 
-            ViewData["CountryKey"] = new SelectList(_context.Countries.OrderBy(x=> x.CountryName), "Key", "CountryName");
+            ViewData["CountryKey"] = new SelectList(_context.Countries.AsNoTracking(), "Key", "CountryName");
 
             return View();
         }
@@ -146,6 +149,49 @@ namespace flip_flop.Controllers
             if (ModelState.IsValid)
             {
                 plainTickets.IsSold = false;
+
+                var country_name = _context.Countries.Where(ct => ct.Key == _context.Targets.Where(t=>t.Key == plainTickets.Target).FirstOrDefault().CountryName).FirstOrDefault().CountryName;
+                List<string> vo = new List<string>();
+
+                string res="";
+                List<string> x = new List<string>();
+                List<double> yb = new List<double>();
+                
+                foreach (var obj in _context.PlainTickets)
+                {
+                  x.Add(_context.Countries.Where(ct => ct.Key == _context.Targets.Where(t => t.Key == obj.Target).FirstOrDefault().CountryName).FirstOrDefault().CountryName);
+                    double val = -1;
+
+                    if (obj.IsSold)
+                    {
+                        val = 1;
+                    }
+
+                    yb.Add(val);
+                }
+
+                double[] y = yb.ToArray();
+                var vocabulary = x.SelectMany(GetWords).Distinct().OrderBy(word => word).ToList();
+
+                var problemBuilder = new TextClassificationProblemBuilder();
+
+                var problem = problemBuilder.CreateProblem(x, y, vocabulary.ToList());
+
+                const int C = 1;
+
+                var model = new C_SVC(problem, KernelHelper.LinearKernel(), C);
+
+                var accuracy = model.GetCrossValidationAccuracy(10);
+
+               var _predictionDictionary = new Dictionary<int, string> { { -1, "no" }, { 1, "yes" } };
+
+                var newX = TextClassificationProblemBuilder.CreateNode(country_name, vocabulary);
+
+                var predictedY = model.Predict(newX);
+
+                Debug.WriteLine("The prediction is " + _predictionDictionary[(int)predictedY]);
+
+
                 _context.Add(plainTickets);
                 await _context.SaveChangesAsync();
 
@@ -166,6 +212,13 @@ namespace flip_flop.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(plainTickets);
+        }
+
+
+
+        private static IEnumerable<string> GetWords(string x)
+        {
+            return x.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         [HttpPost]

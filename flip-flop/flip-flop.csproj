@@ -1,23 +1,51 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
+   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+	<Reference Include="netstandard" />
+	</ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\Videos\wizzair.mp4" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="libsvm.net" Version="2.1.8" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.1.2" />
     <PackageReference Include="Microsoft.jQuery.Unobtrusive.Ajax" Version="3.2.5" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Svm\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="CsvReader">
+      <HintPath>..\..\..\svmtutorial-master\svmtutorial-master\Csharp\SVM_Text_Classifier\packages\CsvTools.1.0.10\lib\CsvReader.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Core">
+      <HintPath>..\..\..\svmtutorial-master\svmtutorial-master\Csharp\SVM_Text_Classifier\packages\IKVM.OpenJDK.Core.7.2.4630.5\lib\IKVM.OpenJDK.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.Util">
+      <HintPath>..\..\..\svmtutorial-master\svmtutorial-master\Csharp\SVM_Text_Classifier\packages\IKVM.OpenJDK.Util.7.2.4630.5\lib\IKVM.OpenJDK.Util.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.OpenJDK.XML.API">
+      <HintPath>..\..\..\svmtutorial-master\svmtutorial-master\Csharp\SVM_Text_Classifier\packages\IKVM.OpenJDK.XML.API.7.2.4630.5\lib\IKVM.OpenJDK.XML.API.dll</HintPath>
+    </Reference>
+    <Reference Include="IKVM.Runtime">
+      <HintPath>..\..\..\svmtutorial-master\svmtutorial-master\Csharp\SVM_Text_Classifier\packages\IKVM.Runtime.7.2.4630.5\lib\IKVM.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="libsvm">
+      <HintPath>..\..\..\svmtutorial-master\svmtutorial-master\Csharp\SVM_Text_Classifier\packages\libsvm.net.2.1.7\lib\libsvm.dll</HintPath>
+    </Reference>
+    <Reference Include="LIBSVM.NET">
+      <HintPath>..\..\..\svmtutorial-master\svmtutorial-master\Csharp\SVM_Text_Classifier\packages\libsvm.net.2.1.7\lib\LIBSVM.NET.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
