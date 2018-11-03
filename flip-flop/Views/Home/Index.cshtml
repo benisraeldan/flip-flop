@@ -1,56 +1,132 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<table cellspacing="10" cellpadding="10">
-    <tbody>
-        <tr>
-            <td>
-                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-                    <ol class="carousel-indicators">
-                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#myCarousel" data-slide-to="1"></li>
-                        <li data-target="#myCarousel" data-slide-to="2"></li>
-                    </ol>
-                    <div class="carousel-inner" role="listbox">
-                        <div class="item active">
-                            <img src="~/images/Nyc.jpg" alt="ASP.NET" class="img-responsive" />
-                            <div class="carousel-caption" role="option">
-                                <p>
-                                    New - York: @ViewData["New-York"]
-                                </p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="~/images/Paris.jpg" alt="Visual Studio" class="img-responsive" />
-                            <div class="carousel-caption" role="option">
-                                <p>
+<html>
+<head>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-                                    Paris: @ViewData["Paris"]
-                                </p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="~/images/London.jpg" alt="Microsoft Azure" class="img-responsive" />
-                            <div class="carousel-caption" role="option">
-                                <p>
 
-                                    London: @ViewData["London"]
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </td>
+    <script type='text/javascript'>
 
-            <td colspan="5">
+        var map, searchManager;
 
-                <video width="567" height="567" autoplay>
-                    <source src="~/Videos/wizzair.mp4" type="video/mp4">
-                </video>
-            </td>
-        </tr>
+        var jsonObj = @Html.Raw(Json.Serialize(ViewBag.countries));
+        function GetMap() {
+            map = new Microsoft.Maps.Map('#myMap', {});
 
-    </tbody>
-</table>
+
+            for (i = 0; i < jsonObj.length; i++) {
+                geocodeQuery(jsonObj[i]);
+            }
+
+        }
+        function geocodeQuery(query) {
+            //If search manager is not defined, load the search module.
+            if (!searchManager) {
+                //Create an instance of the search manager and call the geocodeQuery function again.
+                Microsoft.Maps.loadModule('Microsoft.Maps.Search', function () {
+                    searchManager = new Microsoft.Maps.Search.SearchManager(map);
+                    geocodeQuery(query);
+                });
+            } else {
+                var searchRequest = {
+                    where: query,
+                    callback: function (r) {
+                        //Add the first result to the map and zoom into it.
+                        if (r && r.results && r.results.length > 0) {
+                            var pin = new Microsoft.Maps.Pushpin(r.results[0].location, { color: 'red' });
+                            map.entities.push(pin);
+                            map.setView({ bounds: r.results[0].bestView });
+
+                        }
+                    },
+                    errorCallback: function (e) {
+                        //If there is an error, alert the user about it.
+                        alert("No results found.");
+                    }
+                };
+                //Make the geocode request.
+                searchManager.geocode(searchRequest);
+            }
+        }
+    </script>
+    <script type='text/javascript' src='https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AjwpYEW-U-ZzUNNM2uer8EaP-XtQxI0QbHRIkv9xpzUQtCNj1owncbcYMu7nDRNh' async defer></script>
+</head>
+<body class="w3-container w3-gray">
+
     
+        <table style="margin-top:60px">
+            <tbody>
+                <tr>
+                    <td>
+                        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+                            <ol class="carousel-indicators">
+                                <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                <li data-target="#myCarousel" data-slide-to="1"></li>
+                                <li data-target="#myCarousel" data-slide-to="2"></li>
+                            </ol>
+                            <div class="carousel-inner" role="listbox">
+                                <div class="item active">
+                                    <img src="~/images/Nyc.jpg" alt="ASP.NET" class="img-responsive" />
+                                    <div class="carousel-caption" role="option">
+                                        <p>
+                                            New - York: @ViewData["New-York"]
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <img src="~/images/Paris.jpg" alt="Visual Studio" class="img-responsive" />
+                                    <div class="carousel-caption" role="option">
+                                        <p>
+
+                                            Paris: @ViewData["Paris"]
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <img src="~/images/London.jpg" alt="Microsoft Azure" class="img-responsive" />
+                                    <div class="carousel-caption" role="option">
+                                        <p>
+
+                                            London: @ViewData["London"]
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div id="myMap" style="width:567px;height:320px;margin-left:10px;"></div>
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td>
+                        <a href="~/PlainTickets/Create">
+                            <button class=" w3-blue" style="width:567px;height:300px;font-size:100px">
+                                <i class="fa fa-plane"></i>
+                            </button>
+                        </a>
+                    </td>
+
+                    <td>
+                        
+                        <video width="567" height="300" style="margin-top:5px;margin-left:-5px;" autoplay>
+                            <source src="~/Videos/wizzair.mp4" type="video/mp4">
+                        </video>
+                    </td>
+                    
+                </tr>
+
+            </tbody>
+        </table>
+        
+
+</body>
+</html>
+
+
