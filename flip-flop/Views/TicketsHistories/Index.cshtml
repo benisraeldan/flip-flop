@@ -28,8 +28,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.DateOfTrade)
             </th>
-            <th>Buyer Email</th>
-            <th>Seller Email</th>
+            <th>Buyer </th>
+            <th>Seller </th>
             <th>Destination</th>
             <th></th>
         </tr>
@@ -49,7 +49,7 @@
                 </td>
                 <td name="target" id="target" class="target">
                     @Html.DisplayFor(modelItem => item.KeyTicketNavigation.TargetKeyNavigation.CityName)
-                </td>
+                </td>                
             </tr>
         }
     </tbody>
@@ -59,3 +59,23 @@
 
 </div>
 <script type="text/javascript" src="~/js/FlightPaiDiagram.js"></script>
+<div>
+    <h3>Buyers</h3>
+    <table>
+        <tr>
+            <th>'name</th>
+            <th>last name</th>
+        </tr>
+        @foreach (var item in ViewBag.users)
+        {
+            <tr>
+                <td>
+                   @item.Key.FirstName
+                </td>
+                <td>
+                    @item.Key.LastName
+                </td>
+            </tr>
+        }
+        </table>
+</div>

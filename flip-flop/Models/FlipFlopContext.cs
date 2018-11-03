@@ -17,7 +17,6 @@ namespace flip_flop.Models
         {
         }
 
-        public virtual DbSet<AirPortCompany> AirPortCompany { get; set; }
         public virtual DbSet<Complains> Complains { get; set; }
         public virtual DbSet<ComplainsStatus> ComplainsStatus { get; set; }
         public virtual DbSet<Countries> Countries { get; set; }
@@ -39,17 +38,6 @@ namespace flip_flop.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<AirPortCompany>(entity =>
-            {
-                entity.HasKey(e => e.Key);
-
-                entity.Property(e => e.Key).HasColumnName("key");
-
-                entity.Property(e => e.Name)
-                    .IsRequired()
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-            });
 
             modelBuilder.Entity<Complains>(entity =>
             {

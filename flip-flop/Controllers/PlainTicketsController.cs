@@ -42,6 +42,10 @@ namespace flip_flop.Controllers
             var PlainTickets = from m in _context.PlainTickets
                          select m;
 
+            //TODO: remove my flights
+            //PlainTickets = PlainTickets.Where(x=> x.OwnerId ==)
+            //TODO: if user is not admin need to show only not sold
+            //PlainTickets = PlainTickets.Where(s => s.IsSold);
             if (!String.IsNullOrEmpty(searchString))
             {
                 PlainTickets = PlainTickets.Where(s => s.FlightNumber.ToLower().Contains(searchString));
@@ -52,7 +56,7 @@ namespace flip_flop.Controllers
             }
             if (!String.IsNullOrEmpty(UserName))
             {
-                PlainTickets = PlainTickets.Where(s => s.Owner.FirstName.ToLower().Contains(UserName));
+                //PlainTickets = PlainTickets.Where(s => s.Owner.FirstName.ToLower().Contains(UserName));
             }
 
             PlainTickets = PlainTickets.Include(t => t.ClassKeyNavigation).
@@ -124,6 +128,7 @@ namespace flip_flop.Controllers
             if (ModelState.IsValid)
             {
                 // Add to history
+                // TODO: replace t with current user
                 TicketsHistory ticketsHistory = new TicketsHistory(5, plainTickets.OwnerId, plainTickets.Key);
                 _context.Add(ticketsHistory);
 
@@ -134,9 +139,9 @@ namespace flip_flop.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            
-            
-            return View(plainTickets);
+
+
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: PlainTickets/Create
@@ -144,64 +149,23 @@ namespace flip_flop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Key,Target,DateOfFlight,FlightNumber,OwnerId,CancleFee,Food,Baggage,Class,Price")] PlainTickets plainTickets)
+        public async Task<IActionResult> Create([Bind("Key,Target,DateOfFlight,FlightNumber,CancleFee,Food,Baggage,Class,Price")] PlainTickets plainTickets)
         {
             if (ModelState.IsValid)
             {
                 plainTickets.IsSold = false;
-
-                var country_name = _context.Countries.Where(ct => ct.Key == _context.Targets.Where(t=>t.Key == plainTickets.Target).FirstOrDefault().CountryName).FirstOrDefault().CountryName;
-                List<string> vo = new List<string>();
-
-                string res="";
-                List<string> x = new List<string>();
-                List<double> yb = new List<double>();
-                
-                foreach (var obj in _context.PlainTickets)
-                {
-                  x.Add(_context.Countries.Where(ct => ct.Key == _context.Targets.Where(t => t.Key == obj.Target).FirstOrDefault().CountryName).FirstOrDefault().CountryName);
-                    double val = -1;
-
-                    if (obj.IsSold)
-                    {
-                        val = 1;
-                    }
-
-                    yb.Add(val);
-                }
-
-                double[] y = yb.ToArray();
-                var vocabulary = x.SelectMany(GetWords).Distinct().OrderBy(word => word).ToList();
-
-                var problemBuilder = new TextClassificationProblemBuilder();
-
-                var problem = problemBuilder.CreateProblem(x, y, vocabulary.ToList());
-
-                const int C = 1;
-
-                var model = new C_SVC(problem, KernelHelper.LinearKernel(), C);
-
-                var accuracy = model.GetCrossValidationAccuracy(10);
-
-               var _predictionDictionary = new Dictionary<int, string> { { -1, "no" }, { 1, "yes" } };
-
-                var newX = TextClassificationProblemBuilder.CreateNode(country_name, vocabulary);
-
-                var predictedY = model.Predict(newX);
-
-                Debug.WriteLine("The prediction is " + _predictionDictionary[(int)predictedY]);
-
-
+                //TODO: add owner id
+                plainTickets.OwnerId = 1;                
                 _context.Add(plainTickets);
                 await _context.SaveChangesAsync();
 
                 try
                 {
-                    var accessToken = "EAAehTCoOZARcBAMI9fOZBrkrAEVk1YZCsdnGUBL7ZB3fs9sRpN6nIhC6zHxhXfFmnUQj0EM4BBbQuijVyXqdRfHWP3zmw3ZCykKsTMYv2CCcptDbEV46MZC6JB9cDxNZCbewoEe68FecNTQ1aQz0biRNzPq9f1CPFAyQAIywLZAObeDXs8ZBQy2dZBG4dFwmcoE0MZD";
+                    var accessToken = "EAAehTCoOZARcBACAZChZBnQR1P3XcsV0v1yOFqP7nMSqZA16Stn0rGypJ5jO6ixTp429aMHkEoZAwuQR5zQnXRlq3vqLmM5iBzhtBqJjFnOOLL0cqwCdjkZBGqp6ZCaAZCW7nZB3prL3EZCLnMQnCJin722b8WIpEymkQIbtvvDaMNgodP0wNoIK48C7OPxHOj4XjdZAHTVi0L17QZDZD";
                     var facebookClient = new FacebookClient();
                     var facebookService = new FacebookService(facebookClient);
                    
-                    var postOnWallTask = facebookService.PostOnWallAsync(accessToken, "New destination" + plainTickets.Price);
+                    var postOnWallTask = facebookService.PostOnWallAsync(accessToken, "New destination only" + plainTickets.Price + "$");
                     Task.WaitAll(postOnWallTask);
                 }
                 catch (Exception ex)

@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
+using System.Net;
 
 namespace flip_flop
 {
@@ -39,6 +40,9 @@ namespace flip_flop
             
 
             string connectionstring = "Data Source=LAPTOP-60F4ESR5;Initial Catalog=FlipFlop;Trusted_Connection=True;";
+         
+            //string connectionstring = "Data Source=DESKTOP-SRR5P4I;Initial Catalog=FlipFlop;Trusted_Connection=True;";
+
             services.AddDbContext<FlipFlopContext>(options => options.UseSqlServer(connectionstring));
 
             // added identity
@@ -67,7 +71,14 @@ namespace flip_flop
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseStatusCodePages(async context => {
+                var response = context.HttpContext.Response;
 
+                if (response.StatusCode == (int)HttpStatusCode.Unauthorized ||
+                    response.StatusCode == (int)HttpStatusCode.Forbidden ||
+                    response.StatusCode == (int)HttpStatusCode.NotFound)
+                    response.Redirect("/Account/Login");
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

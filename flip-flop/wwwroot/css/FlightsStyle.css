@@ -46,3 +46,10 @@
     color: white;
     transform: rotateY(180deg);
 }
+.notsee{
+    visibility:collapse;
+}
+.see{
+    text-decoration:underline;
+    color: red;
+}

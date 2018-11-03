@@ -15,6 +15,7 @@ namespace flip_flop.Models
 
       
         public int Target { get; set; }
+        
         public DateTime DateOfFlight { get; set; }
 
         [StringLength(10)]

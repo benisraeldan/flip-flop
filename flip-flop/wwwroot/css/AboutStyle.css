@@ -1,7 +1,8 @@
 ﻿
 h2 {
-    text-shadow: 2px 2px #000000;
+    text-shadow: 2px 2px #808080;
 }
+
 @font-face {
     font-family: myFirstFont;
     src: url(sansation_light.woff);
@@ -9,6 +10,9 @@ h2 {
 
 #div1 {
     font-family: myFirstFont;
-    
     column-count: 3;
+}
+
+#myCanvas {
+    margin-top: 30px;
 }
