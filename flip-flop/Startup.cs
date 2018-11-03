@@ -34,14 +34,8 @@ namespace flip_flop
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             
-            
-<<<<<<< HEAD
-            string connectionstring = "Data Source=DESKTOP-SRR5P4I;Initial Catalog=FlipFlop;Trusted_Connection=True;";
-=======
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            string connectionstring = "Data Source=localhost\\SqlServ;Initial Catalog=FlipFlop;Trusted_Connection=True;";
 
->>>>>>> shahaf
+            string connectionstring = "Data Source=DESKTOP-SRR5P4I;Initial Catalog=FlipFlop;Trusted_Connection=True;";
             services.AddDbContext<FlipFlopContext>(options => options.UseSqlServer(connectionstring));
 
             // added identity
@@ -74,13 +68,8 @@ namespace flip_flop
             {
                 routes.MapRoute(
                     name: "default",
-<<<<<<< HEAD
                     template: "{controller}/{action}",
                     defaults:new { controller ="Home", action = "Contact" });
-=======
-                    template: "{controller}/{action}/{id}",
-                    defaults: new { controller = "Users", action = "Details", id = "2" });
->>>>>>> shahaf
                 routes.MapAreaRoute(
                     name: "Identity",
                     areaName: "Identity",
