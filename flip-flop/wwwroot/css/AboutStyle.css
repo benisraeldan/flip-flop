@@ -7,7 +7,8 @@ h2 {
     src: url(sansation_light.woff);
 }
 
-div {
+#div1 {
     font-family: myFirstFont;
+    
     column-count: 3;
 }

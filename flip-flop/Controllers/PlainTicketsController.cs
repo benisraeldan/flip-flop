@@ -10,6 +10,9 @@ using Newtonsoft.Json;
 using System.Net.Http;
 using System.Text;
 using System.Net.Http.Headers;
+using libsvm;
+using SVMTextClassifier;
+using System.Diagnostics;
 
 namespace flip_flop.Controllers
 {
@@ -113,7 +116,7 @@ namespace flip_flop.Controllers
                 ViewBag.ListOfTargets = new SelectList(targetsList.AsNoTracking(), "Key", "CityName");
             }
 
-            ViewData["CountryKey"] = new SelectList(_context.Countries.OrderBy(x=> x.CountryName), "Key", "CountryName");
+            ViewData["CountryKey"] = new SelectList(_context.Countries.AsNoTracking(), "Key", "CountryName");
 
             return View();
         }
@@ -173,6 +176,13 @@ namespace flip_flop.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(plainTickets);
+        }
+
+
+
+        private static IEnumerable<string> GetWords(string x)
+        {
+            return x.Split(new[] { ' ', '\t' }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         [HttpPost]

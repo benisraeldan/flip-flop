@@ -68,8 +68,9 @@ namespace flip_flop
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller}/{action}",
-                    defaults:new { controller ="Home", action = "Contact" });
+<<<<<<<<< Temporary merge branch 1
+                    template: "{controller}/{action}/{id}",
+                    defaults:new { controller ="Users", action = "Details", id = "2" });
                 routes.MapAreaRoute(
                     name: "Identity",
                     areaName: "Identity",

@@ -1,15 +1,40 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Flip-Flop";
 }
-<environment names="Development">
-    <link rel="stylesheet" href="~/css/AboutStyle.css" />
-</environment>
 
-<h2>@ViewData["Title"]</h2>
-<h3>@ViewData["Message"]</h3>
-<aside>
-    <div>
-        שחף שים את הטקסט פה ותשמור על הסטייל ששמתי, הכל בדרישות
-        Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer possim assum.
+
+<html>
+<head>
+    <link rel="stylesheet" href="~/css/AboutStyle.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+   
+</head>
+<body>
+
+    <canvas id="myCanvas" width="200" height="100">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+
+    <script>
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.font = "30px Arial";
+        ctx.fillText("Flip-flop", 10, 50);
+    </script>
+    <aside>
+        <div id="div1">
+            <h4> @ViewData["Message"]</h4>
+         </div>
+    </aside>
+
     </div>
-</aside>
+</body>
+</html>
+
+  
+
+
+
+
+
