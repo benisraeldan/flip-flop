@@ -6,11 +6,27 @@
 <html>
 <head>
     <link rel="stylesheet" href="~/css/AboutStyle.css" />
-    <h2>@ViewData["Title"]</h2>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+   
 </head>
 <body>
-    <div>
-        @ViewData["Message"]
+
+    <canvas id="myCanvas" width="200" height="100">
+        Your browser does not support the HTML5 canvas tag.
+    </canvas>
+
+    <script>
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext("2d");
+        ctx.font = "30px Arial";
+        ctx.fillText("Flip-flop", 10, 50);
+    </script>
+
+    <div id="div1">
+        <h4> @ViewData["Message"]</h4>
+
+
     </div>
 </body>
 </html>
