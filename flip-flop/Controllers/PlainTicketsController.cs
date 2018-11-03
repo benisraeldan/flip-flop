@@ -39,6 +39,10 @@ namespace flip_flop.Controllers
             var PlainTickets = from m in _context.PlainTickets
                          select m;
 
+            //TODO: remove my flights
+            //PlainTickets = PlainTickets.Where(x=> x.OwnerId ==)
+            //TODO: if user is not admin need to show only not sold
+            //PlainTickets = PlainTickets.Where(s => s.IsSold);
             if (!String.IsNullOrEmpty(searchString))
             {
                 PlainTickets = PlainTickets.Where(s => s.FlightNumber.ToLower().Contains(searchString));
@@ -49,7 +53,7 @@ namespace flip_flop.Controllers
             }
             if (!String.IsNullOrEmpty(UserName))
             {
-                PlainTickets = PlainTickets.Where(s => s.Owner.FirstName.ToLower().Contains(UserName));
+                //PlainTickets = PlainTickets.Where(s => s.Owner.FirstName.ToLower().Contains(UserName));
             }
 
             PlainTickets = PlainTickets.Include(t => t.ClassKeyNavigation).
@@ -121,6 +125,7 @@ namespace flip_flop.Controllers
             if (ModelState.IsValid)
             {
                 // Add to history
+                // TODO: replace t with current user
                 TicketsHistory ticketsHistory = new TicketsHistory(5, plainTickets.OwnerId, plainTickets.Key);
                 _context.Add(ticketsHistory);
 
@@ -141,11 +146,13 @@ namespace flip_flop.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Key,Target,DateOfFlight,FlightNumber,OwnerId,CancleFee,Food,Baggage,Class,Price")] PlainTickets plainTickets)
+        public async Task<IActionResult> Create([Bind("Key,Target,DateOfFlight,FlightNumber,CancleFee,Food,Baggage,Class,Price")] PlainTickets plainTickets)
         {
             if (ModelState.IsValid)
             {
                 plainTickets.IsSold = false;
+                //TODO: add owner id
+                //plainTickets.OwnerId =                 
                 _context.Add(plainTickets);
                 await _context.SaveChangesAsync();
 

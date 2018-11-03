@@ -25,6 +25,8 @@ namespace flip_flop.Controllers
                                         Include(t => t.KeySellerNavigation).
                                         Include(t => t.KeyTicketNavigation).
                                         Include(t=>t.KeyTicketNavigation.TargetKeyNavigation);
+            ViewBag.users = flipFlopContext.GroupBy(x => x.KeyBuyerNavigation).ToList();
+//          
             return View(await flipFlopContext.ToListAsync());
         }
 
@@ -53,7 +55,7 @@ namespace flip_flop.Controllers
                                         Include(t => t.KeyTicketNavigation).
                                         Include(t => t.KeyTicketNavigation.TargetKeyNavigation);
             //PlainTickets = PlainTickets.Where(s => s.IsSold == false);
-
+           
             return View(await History.ToListAsync());
         }
 

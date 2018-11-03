@@ -42,14 +42,14 @@
                     @Html.DisplayFor(modelItem => item.DateOfTrade)
                 </td>
                 <td name="buyer" id="buyer" class="buyer">
-                    @Html.DisplayFor(modelItem => item.KeyBuyerNavigation.FirstName)
+                    @Html.DisplayFor(modelItem => item.KeyBuyerNavigation.Email)
                 </td>
                 <td name="seller" id="seller" class="seller">
-                    @Html.DisplayFor(modelItem => item.KeySellerNavigation.FirstName)
+                    @Html.DisplayFor(modelItem => item.KeySellerNavigation.Email)
                 </td>
                 <td name="target" id="target" class="target">
                     @Html.DisplayFor(modelItem => item.KeyTicketNavigation.TargetKeyNavigation.CityName)
-                </td>
+                </td>                
             </tr>
         }
     </tbody>
@@ -59,3 +59,23 @@
 
 </div>
 <script type="text/javascript" src="~/js/FlightPaiDiagram.js"></script>
+<div>
+    <h3>Buyers</h3>
+    <table>
+        <tr>
+            <th>'name</th>
+            <th>last name</th>
+        </tr>
+        @foreach (var item in ViewBag.users)
+        {
+            <tr>
+                <td>
+                   @item.Key.FirstName
+                </td>
+                <td>
+                    @item.Key.LastName
+                </td>
+            </tr>
+        }
+        </table>
+</div>
