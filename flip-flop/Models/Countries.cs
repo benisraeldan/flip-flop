@@ -18,4 +18,5 @@ namespace flip_flop.Models
 
         public ICollection<Targets> Targets { get; set; }
     }
+
 }

@@ -28,8 +28,8 @@
             <th>
                 @Html.DisplayNameFor(model => model.DateOfTrade)
             </th>
-            <th>Buyer Email</th>
-            <th>Seller Email</th>
+            <th>Buyer </th>
+            <th>Seller </th>
             <th>Destination</th>
             <th></th>
         </tr>
@@ -42,10 +42,10 @@
                     @Html.DisplayFor(modelItem => item.DateOfTrade)
                 </td>
                 <td name="buyer" id="buyer" class="buyer">
-                    @Html.DisplayFor(modelItem => item.KeyBuyerNavigation.Email)
+                    @Html.DisplayFor(modelItem => item.KeyBuyerNavigation.FirstName)
                 </td>
                 <td name="seller" id="seller" class="seller">
-                    @Html.DisplayFor(modelItem => item.KeySellerNavigation.Email)
+                    @Html.DisplayFor(modelItem => item.KeySellerNavigation.FirstName)
                 </td>
                 <td name="target" id="target" class="target">
                     @Html.DisplayFor(modelItem => item.KeyTicketNavigation.TargetKeyNavigation.CityName)

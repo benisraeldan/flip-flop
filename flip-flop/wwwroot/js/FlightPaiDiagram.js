@@ -19,7 +19,7 @@ function GetDataForPai(element) {
 
     // Add To Data the data
     for (var i = 0; i < a.length; i++) {
-        var b = c[i] / targets.length * 100;
+        var b = parseInt(c[i] / targets.length * 100);
         data[i] = { "label": a[i] + b.toString() + "%", "value": b }
     }
     return data;

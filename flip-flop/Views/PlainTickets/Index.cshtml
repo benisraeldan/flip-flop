@@ -31,7 +31,7 @@
                     <div class="flip-card-front">
                         <h1>@Html.DisplayFor(modelItem => item.TargetKeyNavigation.CityName)</h1>
                         
-                        <h1 class="@((item.IsSold) ? "notsee" : "see")">Sold!</h1>
+                        <h1 class="@((!item.IsSold) ? "notsee" : "see")">Sold!</h1>
                     </div>
                     <div class="flip-card-back">
                         <table>

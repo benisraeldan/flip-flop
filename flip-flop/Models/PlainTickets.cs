@@ -15,6 +15,11 @@ namespace flip_flop.Models
 
       
         public int Target { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
+        [Display(Name = "Date")]
+        [Required(ErrorMessage = "Date is mandatory")]
+        [RestrictedDate]
         public DateTime DateOfFlight { get; set; }
 
         [StringLength(10)]
@@ -32,5 +37,14 @@ namespace flip_flop.Models
         public Users Owner { get; set; }
         public Targets TargetKeyNavigation { get; set; }
         public ICollection<TicketsHistory> TicketsHistory { get; set; }
+    }
+}
+
+public class RestrictedDate : ValidationAttribute
+{
+    public override bool IsValid(object date)
+    {
+        DateTime datea = (DateTime)date;
+        return datea > DateTime.Now;
     }
 }
