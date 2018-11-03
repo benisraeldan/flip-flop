@@ -67,94 +67,12 @@ namespace flip_flop.Controllers
                 _context.Add(complainStatus);
 
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return Redirect("/Home/Index");
             }
             ViewData["UserKey"] = new SelectList(_context.Users, "Key", "City", complains.UserKey);
             return View(complains);
         }
 
-        // GET: Complains/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var complains = await _context.Complains.FindAsync(id);
-            if (complains == null)
-            {
-                return NotFound();
-            }
-            ViewData["UserKey"] = new SelectList(_context.Users, "Key", "City", complains.UserKey);
-            return View(complains);
-        }
-
-        // POST: Complains/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Key,Title,UserKey,Content,Date")] Complains complains)
-        {
-            if (id != complains.Key)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(complains);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ComplainsExists(complains.Key))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["UserKey"] = new SelectList(_context.Users, "Key", "City", complains.UserKey);
-            return View(complains);
-        }
-
-        // GET: Complains/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var complains = await _context.Complains
-                .Include(c => c.UserKeyNavigation)
-                .FirstOrDefaultAsync(m => m.Key == id);
-            if (complains == null)
-            {
-                return NotFound();
-            }
-
-            return View(complains);
-        }
-
-        // POST: Complains/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var complains = await _context.Complains.FindAsync(id);
-            _context.Complains.Remove(complains);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool ComplainsExists(int id)
         {

@@ -77,14 +77,14 @@ namespace flip_flop
                 if (response.StatusCode == (int)HttpStatusCode.Unauthorized ||
                     response.StatusCode == (int)HttpStatusCode.Forbidden ||
                     response.StatusCode == (int)HttpStatusCode.NotFound)
-                    response.Redirect("/Account/Login");
+                    response.Redirect("/Identity/Account/Login");
             });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action}",
-                    defaults:new { controller ="Home", action = "Contact" });
+                    defaults:new { controller ="Home", action = "Index" });
                 routes.MapAreaRoute(
                     name: "Identity",
                     areaName: "Identity",

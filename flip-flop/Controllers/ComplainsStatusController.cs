@@ -122,36 +122,6 @@ namespace flip_flop.Controllers
             return View(complainsStatus);
         }
 
-        // GET: ComplainsStatus/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var complainsStatus = await _context.ComplainsStatus
-                .Include(c => c.ComplainKeyNavigation)
-                .FirstOrDefaultAsync(m => m.Key == id);
-            if (complainsStatus == null)
-            {
-                return NotFound();
-            }
-
-            return View(complainsStatus);
-        }
-
-        // POST: ComplainsStatus/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var complainsStatus = await _context.ComplainsStatus.FindAsync(id);
-            _context.ComplainsStatus.Remove(complainsStatus);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
         private bool ComplainsStatusExists(int id)
         {
             return _context.ComplainsStatus.Any(e => e.Key == id);
