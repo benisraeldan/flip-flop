@@ -34,7 +34,7 @@ namespace flip_flop
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             
-            
+         
             string connectionstring = "Data Source=DESKTOP-SRR5P4I;Initial Catalog=FlipFlop;Trusted_Connection=True;";
             services.AddDbContext<FlipFlopContext>(options => options.UseSqlServer(connectionstring));
 
@@ -68,9 +68,8 @@ namespace flip_flop
             {
                 routes.MapRoute(
                     name: "default",
-<<<<<<<<< Temporary merge branch 1
-                    template: "{controller}/{action}/{id}",
-                    defaults:new { controller ="Users", action = "Details", id = "2" });
+                    template: "{controller}/{action}",
+                    defaults:new { controller ="Home", action = "Contact" });
                 routes.MapAreaRoute(
                     name: "Identity",
                     areaName: "Identity",
