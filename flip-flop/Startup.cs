@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace flip_flop
 {
@@ -27,6 +28,8 @@ namespace flip_flop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -35,19 +38,20 @@ namespace flip_flop
             });
             
 
-            string connectionstring = "Data Source=DESKTOP-SRR5P4I;Initial Catalog=FlipFlop;Trusted_Connection=True;";
+            string connectionstring = "Data Source=LAPTOP-60F4ESR5;Initial Catalog=FlipFlop;Trusted_Connection=True;";
             services.AddDbContext<FlipFlopContext>(options => options.UseSqlServer(connectionstring));
 
             // added identity
             services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<FlipFlopContext>();
+                    .AddRoles<IdentityRole>()
+                    .AddEntityFrameworkStores<FlipFlopContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -76,6 +80,47 @@ namespace flip_flop
                     template: "{page}");
 
             });
+            CreateRoles(serviceProvider).Wait();
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            //adding custom roles
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            string[] roleNames = { "Admin", "User" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                //creating the roles and seeding them to the database
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+            
+            //creating a super user who could maintain the web app
+            var admin = new IdentityUser
+            {
+                UserName = "admin@admin.com",
+                Email = "admin@admin.com"
+            };
+
+            string UserPassword = "Aa!23456";
+            var _user = await UserManager.FindByEmailAsync(admin.Email);
+
+            if (_user == null)
+            {
+                var createPowerUser = await UserManager.CreateAsync(admin, UserPassword);
+                if (createPowerUser.Succeeded)
+                {
+                    //here we tie the new user to the "Admin" role 
+                    await UserManager.AddToRoleAsync(admin, "Admin");
+                    await UserManager.AddClaimAsync(admin, new Claim(ClaimTypes.Role, "Admin"));
+                }
+            }
         }
     }
 }

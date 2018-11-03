@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using flip_flop.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace flip_flop.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TicketsHistoriesController : Controller
     {
         private readonly FlipFlopContext _context;
